@@ -1,4 +1,3 @@
-// File: src/embed.js
 import React from "react";
 import ReactDOM from "react-dom/client";
 import ChatUI from "./components/ChatUI";
@@ -14,3 +13,4 @@ const Chatbot = {
   },
 };
 
+export default Chatbot;
