@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import ChatUI from "./components/ChatUI";
 
-const Chatbot = {
+window.Chatbot = {
   init: (config) => {
     const container = document.createElement("div");
     container.id = "botstitch-chatbot-root";
@@ -13,4 +13,4 @@ const Chatbot = {
   },
 };
 
-export default Chatbot;
+export default windowChatbot;

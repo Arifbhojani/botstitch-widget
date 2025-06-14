@@ -1,21 +1,36 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
 
 export default defineConfig({
   plugins: [react()],
   build: {
     lib: {
-      // ✅ MAKE SURE THIS PATH IS CORRECT
-      entry: "./src/embed.jsx",
-      name: "Chatbot",
-      fileName: "embed",
-      formats: ["iife"], // This makes it usable via CDN (window.Chatbot)
+      entry: 'src/embed.jsx', // or embed.jsx if that's what you're using
+      name: 'Chatbot',
+      fileName: 'embed',
+      formats: ['iife'],
     },
     rollupOptions: {
-      external: [],
       output: {
-        globals: {},
+        globals: {
+          react: 'React',
+          'react-dom': 'ReactDOM',
+        },
       },
+    },
+    commonjsOptions: {
+      transformMixedEsModules: true,
+    },
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      plugins: [
+        NodeGlobalsPolyfillPlugin({
+          process: true,
+          buffer: true,
+        }),
+      ],
     },
   },
 });
