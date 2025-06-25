@@ -13,4 +13,4 @@ window.Chatbot = {
   },
 };
 
-export default windowChatbot;
+export default window.Chatbot;
