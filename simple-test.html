@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Chatbot Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 Simple Chatbot Test</h1>
+        <p>This page tests your chatbot widget locally.</p>
+        
+        <button class="test-button" onclick="initDefault()">Default Config</button>
+        <button class="test-button" onclick="initCustom()">Custom Config</button>
+        <button class="test-button" onclick="checkConsole()">Check Console</button>
+        
+        <div id="status" style="margin-top: 20px; padding: 10px; border-radius: 5px;"></div>
+    </div>
+
+    <!-- Load your chatbot widget -->
+    <script src="dist/embed.iife.js"></script>
+    
+    <script>
+        function showStatus(message, isError = false) {
+            const statusDiv = document.getElementById('status');
+            statusDiv.style.background = isError ? '#f8d7da' : '#d4edda';
+            statusDiv.style.color = isError ? '#721c24' : '#155724';
+            statusDiv.textContent = message;
+        }
+
+        function initDefault() {
+            try {
+                if (window.Chatbot) {
+                    window.Chatbot.init();
+                    showStatus('✅ Chatbot initialized with default config!');
+                } else {
+                    showStatus('❌ Chatbot not found!', true);
+                }
+            } catch (error) {
+                showStatus(`❌ Error: ${error.message}`, true);
+            }
+        }
+
+        function initCustom() {
+            try {
+                if (window.Chatbot) {
+                    window.Chatbot.init({
+                        theme: {
+                            button: {
+                                backgroundColor: "#ffc8b8",
+                                right: 20,
+                                bottom: 20,
+                                size: 50
+                            },
+                            chatWindow: {
+                                title: "Your Custom Chat",
+                                welcomeMessage: "Hello! How can I help?"
+                            }
+                        }
+                    });
+                    showStatus('✅ Chatbot initialized with custom config!');
+                } else {
+                    showStatus('❌ Chatbot not found!', true);
+                }
+            } catch (error) {
+                showStatus(`❌ Error: ${error.message}`, true);
+            }
+        }
+
+        function checkConsole() {
+            console.log('=== Chatbot Debug ===');
+            console.log('window.Chatbot:', window.Chatbot);
+            console.log('typeof window.Chatbot:', typeof window.Chatbot);
+            if (window.Chatbot) {
+                console.log('window.Chatbot.init:', window.Chatbot.init);
+            }
+            showStatus('📋 Check browser console (F12) for debug info');
+        }
+
+        // Auto-check on load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                if (window.Chatbot) {
+                    showStatus('✅ Chatbot loaded successfully!');
+                } else {
+                    showStatus('❌ Chatbot failed to load', true);
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html> 

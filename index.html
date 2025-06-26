@@ -3,9 +3,239 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>BotStitch Widget</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BotStitch Chatbot Widget Demo</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #4a5568;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        .demo-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            background: #f7fafc;
+        }
+        .test-button {
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px 5px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        .test-button:hover {
+            background: #3182ce;
+            transform: translateY(-2px);
+        }
+        .status {
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        .success {
+            background: #c6f6d5;
+            color: #22543d;
+            border: 1px solid #9ae6b4;
+        }
+        .error {
+            background: #fed7d7;
+            color: #742a2a;
+            border: 1px solid #feb2b2;
+        }
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .feature-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            text-align: center;
+        }
+        .feature-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+    </style>
   </head>
   <body>
-    <script type="module" src="/src/embed.js"></script>
+    <div class="container">
+        <h1>🤖 BotStitch Chatbot Widget</h1>
+        <p style="text-align: center; font-size: 1.2em; color: #4a5568;">
+            A lightweight, customizable chatbot widget for any website
+        </p>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Lightweight</h3>
+                <p>Minimal bundle size for fast loading</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3>Customizable</h3>
+                <p>Easy theming and configuration</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔌</div>
+                <h3>Easy Integration</h3>
+                <p>One script tag to embed anywhere</p>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>🧪 Live Demo</h2>
+            <div id="status"></div>
+            
+            <button class="test-button" onclick="testChatbot()">🚀 Initialize Chatbot</button>
+            <button class="test-button" onclick="testCustomTheme()">🎨 Custom Theme</button>
+            <button class="test-button" onclick="checkConsole()">🔍 Debug Console</button>
+        </div>
+
+        <div class="demo-section">
+            <h2>📋 Integration Code</h2>
+            <div class="code-block">
+&lt;!-- Add this to your HTML head or body --&gt;
+&lt;script src="https://your-username.github.io/botstitch-widget/dist/embed.iife.js"&gt;&lt;/script&gt;
+
+&lt;script&gt;
+  // Initialize with default settings
+  window.Chatbot.init();
+  
+  // Or with custom configuration
+  window.Chatbot.init({
+    theme: {
+      button: {
+        backgroundColor: '#ff6b6b',
+        color: 'white'
+      }
+    }
+  });
+&lt;/script&gt;
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>🔧 Console Testing</h2>
+            <p>Open browser console (F12) and try these commands:</p>
+            <div class="code-block">
+// Check if widget is loaded
+console.log(window.Chatbot);
+
+// Initialize chatbot
+window.Chatbot.init();
+
+// Test with custom config
+window.Chatbot.init({
+  theme: {
+    button: { backgroundColor: 'red' }
+  }
+});
+            </div>
+        </div>
+    </div>
+
+    <!-- Load the chatbot widget -->
+    <script src="dist/embed.iife.js"></script>
+    
+    <script>
+        function showStatus(message, isError = false) {
+            const statusDiv = document.getElementById('status');
+            statusDiv.innerHTML = `<div class="status ${isError ? 'error' : 'success'}">${message}</div>`;
+        }
+
+        function testChatbot() {
+            try {
+                if (window.Chatbot) {
+                    window.Chatbot.init();
+                    showStatus('✅ Chatbot initialized successfully! Look for the floating chat button.');
+                } else {
+                    showStatus('❌ Chatbot object not found! Check if the script loaded correctly.', true);
+                }
+            } catch (error) {
+                showStatus(`❌ Error: ${error.message}`, true);
+            }
+        }
+
+        function testCustomTheme() {
+            try {
+                if (window.Chatbot) {
+                    window.Chatbot.init({
+                        theme: {
+                            button: {
+                                backgroundColor: '#ff6b6b',
+                                color: 'white',
+                                borderRadius: '25px'
+                            }
+                        }
+                    });
+                    showStatus('✅ Chatbot initialized with custom red theme!');
+                } else {
+                    showStatus('❌ Chatbot object not found!', true);
+                }
+            } catch (error) {
+                showStatus(`❌ Error: ${error.message}`, true);
+            }
+        }
+
+        function checkConsole() {
+            console.log('=== BotStitch Chatbot Debug Info ===');
+            console.log('window.Chatbot:', window.Chatbot);
+            console.log('typeof window.Chatbot:', typeof window.Chatbot);
+            if (window.Chatbot) {
+                console.log('window.Chatbot.init:', window.Chatbot.init);
+                console.log('typeof window.Chatbot.init:', typeof window.Chatbot.init);
+            }
+            console.log('====================================');
+            showStatus('📋 Check browser console (F12) for detailed debug information');
+        }
+
+        // Auto-check on page load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                if (window.Chatbot) {
+                    showStatus('✅ Chatbot widget loaded successfully! Ready to test.');
+                } else {
+                    showStatus('❌ Chatbot widget failed to load. Check network tab for errors.', true);
+                }
+            }, 1000);
+        });
+    </script>
   </body>
 </html>
