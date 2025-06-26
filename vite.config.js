@@ -24,14 +24,19 @@ export default defineConfig({
     },
   },
   define: {
-    'process.env': {},
     'process.env.NODE_ENV': JSON.stringify('production'),
-    'process.env.REACT_APP_ENV': JSON.stringify('production'),
+    'process.env': {},
     'process': { env: { NODE_ENV: 'production' } },
     global: 'globalThis',
   },
   optimizeDeps: {
     esbuildOptions: {
+      define: {
+        'process.env.NODE_ENV': '"production"',
+        'process.env': '{}',
+        'process': '{ env: { NODE_ENV: "production" } }',
+        global: 'globalThis',
+      },
       plugins: [
         NodeGlobalsPolyfillPlugin({
           process: true,
