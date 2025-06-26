@@ -25,8 +25,9 @@ export default defineConfig({
   },
   define: {
     'process.env': {},
-    'process.env.NODE_ENV': '"production"',
-    'process.env.REACT_APP_ENV': '"production"',
+    'process.env.NODE_ENV': JSON.stringify('production'),
+    'process.env.REACT_APP_ENV': JSON.stringify('production'),
+    'process': { env: { NODE_ENV: 'production' } },
     global: 'globalThis',
   },
   optimizeDeps: {
