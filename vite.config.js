@@ -17,12 +17,17 @@ export default defineConfig({
           react: 'React',
           'react-dom': 'ReactDOM',
         },
-        extend: true,
       },
     },
     commonjsOptions: {
       transformMixedEsModules: true,
     },
+  },
+  define: {
+    'process.env': {},
+    'process.env.NODE_ENV': '"production"',
+    'process.env.REACT_APP_ENV': '"production"',
+    global: 'globalThis',
   },
   optimizeDeps: {
     esbuildOptions: {
